@@ -10,19 +10,24 @@ static INTERNER: LazyLock<Mutex<DefaultStringInterner>> =
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(from = "String")]
 #[serde(into = "String")]
-struct SharedStr {
+pub struct SharedStr {
     /// The Symbol to refer to the source String in the String Cache
     symbol: SymbolU32,
 }
 
 impl SharedStr {
     /// The ``SymbolU32`` to refer to the source ``String`` in the ``DefaultStringInterner`` Cache
-    pub const fn symbol(self) -> SymbolU32 {
+    #[must_use] pub const fn symbol(self) -> SymbolU32 {
         self.symbol
     }
 
     /// Returns the ``String`` stored in the Cache for this `SharedStr` instance
-    pub fn string(self) -> String {
+    ///
+    /// # Panics
+    /// Should never panic. The panic occurs if it attempts to resolve the symbol and fails, but
+    /// that shouldnt ever happen because the symbol can only be created by an interner in the
+    /// static context.
+    #[must_use] pub fn string(self) -> String {
         INTERNER
             .lock()
             .resolve(self.symbol)
