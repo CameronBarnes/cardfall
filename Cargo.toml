@@ -15,7 +15,7 @@ nursery = { level = "deny", priority = -1 }
 module_name_repetitions = "warn"
 
 [features]
-shared_str = ["dep:string-interner"]
+shared_str = ["dep:string-interner", "dep:parking_lot"]
 api = ["bulk", "dep:reqwest", "dep:httpstatus"]
 bulk = []
 
@@ -36,3 +36,4 @@ httpstatus = { version = "0.1", optional = true }
 tinyvec = { version = "1.8", features = ["serde"] }
 
 string-interner = { version = "0.17", optional = true }
+parking_lot = { version = "0.12", optional = true }
