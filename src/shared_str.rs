@@ -7,7 +7,7 @@ use string_interner::{symbol::SymbolU32, DefaultStringInterner};
 static INTERNER: LazyLock<Mutex<DefaultStringInterner>> =
     LazyLock::new(|| Mutex::new(DefaultStringInterner::new()));
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Hash)]
 #[serde(from = "String")]
 #[serde(into = "String")]
 pub struct SharedStr {
